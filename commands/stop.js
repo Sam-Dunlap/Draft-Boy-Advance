@@ -27,18 +27,16 @@ module.exports = {
 
 
         const cache = deleteCache(getCacheWithGuildId(interaction.guild.id))[0];
-        if (!cache) {
-            console.log('no cache');
-            await interaction.reply('it is done');
-            return;
-        }
+
         console.log(
-`           ////////////////////////////////
-            ////////// Cache Data //////////
-            player count: ${cache.playerCount}
-            pick order: ${cache.pickOrder}
-            team size: ${cache.teamSize}
-            ////////////////////////////////`);
+            `
+        //////////////////////////////////////////
+        Draft Stopped
+        player count: ${cache? cache.playerCount: 'No cache data to display'}
+        pick order: ${cache? cache.pickOrder: 'No cache data to display'}
+        team size: ${cache? cache.teamSize: 'No cache data to display'}
+        //////////////////////////////////////////
+            `);
             await interaction.reply('it is done');
 
     }

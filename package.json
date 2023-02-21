@@ -4,6 +4,7 @@
   "description": "Discord bot for Pokemon Draft Leagues",
   "main": "index.js",
   "scripts": {
+    "start": "node deploy-commands.js && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -11,8 +12,5 @@
   "dependencies": {
     "discord.js": "^14.7.1",
     "googleapis": "^111.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
   }
 }

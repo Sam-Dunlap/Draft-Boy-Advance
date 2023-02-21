@@ -21,9 +21,6 @@ const stagePicks = (props) => {
         if (!user || user.picks.length === 0) {
             foundAllQueuedPicks = true;
             nextPlayerName = username;
-            console.log('no queued picks for next draft seat');
-            console.log(pickOrder);
-            console.log(username);
             break;
         };
 
@@ -32,7 +29,7 @@ const stagePicks = (props) => {
             if (user.picks.length === 0) {
                 nextPlayerName = username;
                 foundAllQueuedPicks = true;
-                console.log('they sniped this poor mans whole career');
+                console.log('[QUEUE]: they sniped this poor mans whole career');
                 break;
             };
 
@@ -41,12 +38,10 @@ const stagePicks = (props) => {
         // success
         pickedMons.push(user.picks[0]);
         stagedPicks.push([user.picks[0], user.name]);
-        console.log(user.picks[0]);
         user.deletePickByIndex(0);
-
+        console.log(`[QUEUE]: Queued pick by ${user.name} staged`)
         n1++;
     };
-    console.log('in stagePicks: ', n1, nextPlayerName, stagedPicks);
     return { n1, nextPlayerName, stagedPicks }
 
 }

@@ -51,7 +51,7 @@ module.exports = {
 
         const firstPickUserName = pickOrder.data.values[0][0];
 
-        const queriedMember = await interaction.guild.members.fetch({query: firstPickUserName, limit: 1});
+        const queriedMember = await interaction.guild.members.fetch({query: firstPickUserName, limit: 1}).catch(console.error);
         const memberId = queriedMember.map(u => u.user.id)[0];
 
         await outputChannel.send(`${userMention(memberId)}, you're up first! Please use /pick to select your draft pick.`)
@@ -62,13 +62,22 @@ module.exports = {
         googleSheets.spreadsheets.values.update({
             auth,
             spreadsheetId,
-            range: "BotData!A2:C2",
+            range: "BotData!A2:D2",
             valueInputOption: "RAW",
             resource: {
                 values: [
-                    [1, playerCount, outputChannel.id]
+                    [1, playerCount, outputChannel.id, teamSize]
                 ]
             }
         });
+        console.log(
+        `
+        //////////////////////////////////////////
+        Draft Started
+        player count: ${playerCount}
+        output channel: ${outputChannel.name}
+        team size: ${teamSize}
+        //////////////////////////////////////////
+        `);
     }
 }

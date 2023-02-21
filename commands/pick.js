@@ -46,7 +46,6 @@ module.exports = {
         const validPicks = sheetData.data.valueRanges[2].values.flat();
         const outputChannel = await interaction.guild.channels.fetch(cache.outputChannel);
         const pokemonPick = interaction.options.getString('pokemon').toUpperCase();
-        console.log(`n: ${n}, x: ${x}`);
         const y = getDraftSeat(n, x);
 
         await interaction.reply({content: `Making sure ${pokemonPick} is available...`, ephemeral: true});
@@ -59,8 +58,6 @@ module.exports = {
         
         pickedMons.forEach(mon => {
             if (mon === pokemonPick){
-                console.log(pickedMons);
-                console.log(mon)
                 foundDuplicatePick = true;
             }
         });
@@ -78,9 +75,7 @@ module.exports = {
             await interaction.editReply({content: `${pokemonPick} has already been chosen in this draft. Please lock in a different Pokemon.`});
             return;
         };
-        console.log(y);
-        console.log("PICKORDER ",cache.pickOrder);
-        console.log(currentDrafter);
+
         if (commandCaller === currentDrafter) {
 
             const values = [
@@ -88,7 +83,7 @@ module.exports = {
             ];
 
             await interaction.editReply(`Success! You have drafted ${pokemonPick}.`);
-            await outputChannel.send(`${interaction.user.username} has locked in ${pokemonPick}!`);
+            await outputChannel.send(`${interaction.user} has locked in ${pokemonPick}!`);
             pickedMons.push(pokemonPick)
             const { n1, nextPlayerName, stagedPicks } = stagePicks({n, x, guildId: interaction.guild.id, pickedMons});
             
@@ -100,15 +95,17 @@ module.exports = {
             };
 
             stagedPicks.forEach(pick => {
-                outputChannel.send(`${pick[1]} has locked in ${pick[0]}!`);
-                console.log("pick:", pick);
                 values.push(pick);
             });
-            console.log('nextPlayerName: ', nextPlayerName);
-            const queriedMember = await interaction.guild.members.fetch({query: nextPlayerName, limit: 1});
+
+            stagedPicks.forEach(async pick => {
+                const users = await interaction.guild.members.fetch({query: pick[1], limit: 1}).catch(console.error);
+                const user = users.map(u => u.user)[0];
+                await outputChannel.send(`${user} has locked in ${pick[0]}!`);
+            });
+            const queriedMember = await interaction.guild.members.fetch({query: nextPlayerName, limit: 1}).catch(console.error);
             const memberId = queriedMember.map(u => u.user.id)[0];
 
-            console.log('values: ', values);
             googleSheets.spreadsheets.values.append({
                 auth,
                 spreadsheetId,
@@ -134,6 +131,14 @@ module.exports = {
             if (n1 > cache.teamSize * cache.playerCount) {
                 deleteCache(cache);
                 await outputChannel.send('The draft is complete. May the best mons win!');
+                console.log(
+                `
+        //////////////////////////////////////////
+        Draft Finished
+        ${n-1} picks, I think.
+        GLHF
+        //////////////////////////////////////////
+                `)
                 return;
             };
             
@@ -148,17 +153,15 @@ module.exports = {
                     return;
                 }
                 if (user.picks.length >= cache.teamSize) {
-                    await interaction.reply(`You have already locked in ${user.picks.length} picks. That is far too many picks. Please /delete some before locking more in.`)
+                    await interaction.editReply(`You have already locked in ${user.picks.length} picks. That is far too many picks. Please /delete some before locking more in.`);
+                    return;
                 }
                 user.lock = pokemonPick;
                 await interaction.editReply(`Your pick has been locked in and you have ${user.picks.length} pick(s) locked in. When it's your turn to draft I will automatically submit ${pokemonPick} if it is still available.`);
-                console.log(pendingPicks);
                 return;
             }
             const pickSaver = new UserPicks(interaction.user, pokemonPick);
-            console.log(pickSaver)
-            const picks = addUsertoPendingPicks(pickSaver);
-            console.log(picks);
+            addUsertoPendingPicks(pickSaver);
             await interaction.editReply(`Your pick has been locked in. When it's your turn to draft I will automatically submit ${pokemonPick} if it is still available.`);
         }
 

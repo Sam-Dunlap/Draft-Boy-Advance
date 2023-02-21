@@ -2,7 +2,6 @@ const { SlashCommandBuilder, userMention } = require("discord.js");
 const { google } = require('googleapis');
 const { getCacheWithGuildId } = require("../Cache");
 const { spreadsheetId } = require('../config.json');
-const { getReverseSlope } = require("../SnakeDraftEquations");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -66,10 +65,8 @@ module.exports = {
         const guildMembers = await interaction.guild.members.fetch();
         const guildMembersFormatted = guildMembers.map(m => m.user);
         const drafter = guildMembersFormatted.find(user => user.username == coach);
-        console.log(guildMembersFormatted);
-        console.log(drafter);
         const channel = await interaction.guild.channels.fetch(cache.outputChannel);
-        await channel.send(`${userMention(drafter.id)}, it is now your turn to pick.`)
+        await channel.send(`${userMention(drafter.id)}, it is now your turn to pick.`);
         
     }
 }

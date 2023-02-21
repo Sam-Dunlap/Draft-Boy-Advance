@@ -17,16 +17,23 @@ IMPORTANT: Once you have set everything up, the three pages Sheet1, BotData, and
 You will also need to [set up a bot application with Discord](https://discordjs.guide/preparations/setting-up-a-bot-application.html). Once you have done so, make a config.json file in the root folder. It should look like this:
 
 {
+
 token: "YOUR_TOKEN_HERE",
+
 clientId: "BOT_CLIENT_ID_HERE",
+
 spreadsheetId: "SHEETS_SPREADSHEET_ID_HERE"
+
 }
 
 You can find the ID of your spreadsheet in the URL - the long, random-looking string between "d/" and "/edit".
 
 Finally, make sure you have Node.js installed, then run npm i in the project folder.
+
 Run node deploy-commands.js to register slash commands.
+
 [Invite your bot to your server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
+
 run node index.js
 
 If everything went right you should now have a live clone of Draft Boy Advance.

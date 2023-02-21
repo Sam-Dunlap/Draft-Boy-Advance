@@ -30,11 +30,9 @@ You can find the ID of your spreadsheet in the URL - the long, random-looking st
 
 Finally, make sure you have Node.js installed, then run npm i in the project folder.
 
-Run node deploy-commands.js to register slash commands.
-
 [Invite your bot to your server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
 
-run node index.js
+run npm start
 
 If everything went right you should now have a live clone of Draft Boy Advance.
 

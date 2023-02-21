@@ -8,13 +8,13 @@ The bot is not currently scalable to run in multiple servers (functionality plan
 
 To do so, you will need a google cloud service account, which you can set up at console.cloud.google.com. Once you have that, you can download a credentials.json file from the console. Move that file to the bot's root folder.
 
-The bot uses google sheets to track and output the draft data. You will need to copy this template to your own Google Drive (file => Make a copy). https://docs.google.com/spreadsheets/d/1m4CsvwY6wZDcFwh5lv-7nuUHzyz94MkraYDjA2Vk-Vk/edit?usp=sharing. Then get your google service account email. It is visible on the google cloud console, and in the client_email section of your credentials.json file. Share your spreadsheet with that email, unchecking the 'alert people' box and allowing edit privilege when you do so.
+The bot uses google sheets to track and output the draft data. You will need to copy [this](https://docs.google.com/spreadsheets/d/1m4CsvwY6wZDcFwh5lv-7nuUHzyz94MkraYDjA2Vk-Vk/edit?usp=sharing) template to your own Google Drive (file => Make a copy). Then get your google service account email. It is visible on the google cloud console, and in the client_email section of your credentials.json file. Share your spreadsheet with that email, unchecking the 'alert people' box and allowing edit privilege when you do so.
 
 Currently this template is set up for Gen IX VGC Series 2. To change the allowed Pokemon, change column H in Sheet1 to include only the legal Pokemon in your format of choice.
 
 IMPORTANT: Once you have set everything up, the three pages Sheet1, BotData, and PickOrder should be LOCKED and HIDDEN to all users except the Google service account, and Teams List should be LOCKED to all users. Manual changes to these spreadsheets will likely cause unexpected behavior.
 
-You will also need to set up a bot application with Discord: https://discordjs.guide/preparations/setting-up-a-bot-application.html. Once you have done so, make a config.json file in the root folder. It should look like this:
+You will also need to [set up a bot application with Discord](https://discordjs.guide/preparations/setting-up-a-bot-application.html). Once you have done so, make a config.json file in the root folder. It should look like this:
 
 {
 token: "YOUR_TOKEN_HERE",
@@ -26,7 +26,7 @@ You can find the ID of your spreadsheet in the URL - the long, random-looking st
 
 Finally, make sure you have Node.js installed, then run npm i in the project folder.
 Run node deploy-commands.js to register slash commands.
-Invite your bot to your server: https://discordjs.guide/preparations/adding-your-bot-to-servers.html
+[Invite your bot to your server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
 run node index.js
 
 If everything went right you should now have a live clone of Draft Boy Advance.

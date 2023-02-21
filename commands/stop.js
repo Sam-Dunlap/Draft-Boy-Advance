@@ -22,7 +22,7 @@ module.exports = {
         googleSheets.spreadsheets.values.clear({
             auth,
             spreadsheetId, 
-            range: "Sheet1!A2:B"
+            range: "Master!A2:B"
         })
 
 

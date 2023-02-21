@@ -35,8 +35,8 @@ module.exports = {
             spreadsheetId,
             ranges: [
                 "BotData!A2:C2",
-                "Sheet1!A2:A",
-                "Sheet1!H2:H"
+                "Master!A2:A",
+                "Master!H2:H"
             ]
         });
 
@@ -112,7 +112,7 @@ module.exports = {
             googleSheets.spreadsheets.values.append({
                 auth,
                 spreadsheetId,
-                range: "Sheet1!A2:B",
+                range: "Master!A2:B",
                 valueInputOption: "RAW",
                 resource: {
                     values

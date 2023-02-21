@@ -82,7 +82,7 @@ Admin-only command. Rewinds the draft to picknumber, including that number - i.e
 
 ## Notes
 
-I will continue adding functionality to this bot over time, so if you see something missing that you would like in future releases, let me know with an issue on the [github](add github link here).
+I will continue adding functionality to this bot over time, so if you see something missing that you would like in future releases, let me know with an issue on the [github](https://github.com/Sam-Dunlap/Draft-Boy-Advance).
 
 It's therefore a good idea to occasionally check back here for updates if you're using a clone.
 

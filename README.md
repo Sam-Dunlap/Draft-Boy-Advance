@@ -18,7 +18,7 @@ You will also need to [set up a bot application with Discord](https://discordjs.
 
 {
 
-token: "YOUR_TOKEN_HERE",
+token: "BOT_TOKEN_HERE",
 
 clientId: "BOT_CLIENT_ID_HERE",
 

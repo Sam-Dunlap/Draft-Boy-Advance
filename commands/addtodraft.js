@@ -11,7 +11,7 @@ module.exports = {
         const { username } = interaction.targetUser;
 
         if (!interaction.guild.roles.cache.find(r => r.name === 'Drafter')) {
-            interaction.guild.roles.create({
+            await interaction.guild.roles.create({
                 name: 'Drafter',
                 color: 'BLUE',
                 reason: 'Active drafters will be assigned this role',

@@ -33,8 +33,8 @@ module.exports = {
 
         let textFormattedOrder = '\n';
 
-        for (let i = 1; i <= order.length; i++) {
-            textFormattedOrder += `${i}. ${order[i - 1]}\n`
+        for (let i = 0; i < order.length; i++) {
+            textFormattedOrder += `${i + 1}. ${order[i]}\n`
         }
 
         await interaction.reply({content: `The current pick order is ${textFormattedOrder}`, ephemeral: true});

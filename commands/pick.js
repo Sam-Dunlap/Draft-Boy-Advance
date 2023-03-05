@@ -9,12 +9,17 @@ const { getDraftSeat } = require('../SnakeDraftEquations');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pick')
-        .setDescription('Lock in your draft pick')
-        .addStringOption(option => 
-            option.setName('pokemon')
-                .setDescription('Your pick')
-                .setRequired(true)),
-
+        .setDescription('lock or queue a pick')
+        .addStringOption(o =>
+            o  
+                .setName('pokemon')
+                .setDescription('Your Pick')
+                .setRequired(true))
+        .addBooleanOption(o =>
+            o
+                .setName('admin')
+                .setDescription('admin pick? default false'))
+    ,
     async execute(interaction) {
         const cache = getCacheWithGuildId(interaction.guild.id);
         
@@ -46,7 +51,12 @@ module.exports = {
         const validPicks = sheetData.data.valueRanges[2].values.flat();
         const outputChannel = await interaction.guild.channels.fetch(cache.outputChannel);
         const pokemonPick = interaction.options.getString('pokemon').toUpperCase();
+        const admin = interaction.options.getBoolean('admin');
         const y = getDraftSeat(n, x);
+
+        if (admin && interaction.user.id !== '111742358072082432') {
+            return interaction.reply(`Hey, ${interaction.user} is trying to make an admin pick and they're not an admin! Shame them!`);
+        }
 
         await interaction.reply({content: `Making sure ${pokemonPick} is available...`, ephemeral: true});
         
@@ -76,14 +86,14 @@ module.exports = {
             return;
         };
 
-        if (commandCaller === currentDrafter) {
+        if (commandCaller === currentDrafter || admin) {
 
             const values = [
-                [pokemonPick, commandCaller]
+                [pokemonPick, currentDrafter]
             ];
 
             await interaction.editReply(`Success! You have drafted ${pokemonPick}.`);
-            await outputChannel.send(`${interaction.user} has locked in ${pokemonPick}!`);
+            await outputChannel.send(`${admin ? interaction.user.username : interaction.user} has locked in ${admin ? pokemonPick + ` for ${currentDrafter}` : pokemonPick}!`);
             pickedMons.push(pokemonPick)
             const { n1, nextPlayerName, stagedPicks } = stagePicks({n, x, guildId: interaction.guild.id, pickedMons});
             

@@ -37,7 +37,7 @@ module.exports = {
         saveCache(cache);
 
         const y = getDraftSeat(n, x);
-        const nextDrafter = await interaction.guild.members.fetch({query: pickOrder[y], limit: 1}).catch(console.error);
+        const nextDrafter = await interaction.guild.members.fetch({query: pickOrder[y - 1], limit: 1}).catch(console.error);
         const drafterId = nextDrafter.map(u => u.user.id)[0];
 
         await interaction.editReply(`I think that your draft had ${x} players and was on pick number ${n}. Continuing from pick ${n}.`);

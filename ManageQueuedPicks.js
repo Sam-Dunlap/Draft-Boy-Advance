@@ -32,10 +32,10 @@ const stagePicks = (props) => {
                 console.log('[QUEUE]: they sniped this poor mans whole career');
                 break;
             };
-
+            
         };
-
-        // success
+        
+        if (foundAllQueuedPicks) break;
         pickedMons.push(user.picks[0]);
         stagedPicks.push([user.picks[0], user.name]);
         user.deletePickByIndex(0);

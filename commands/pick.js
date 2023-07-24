@@ -45,15 +45,18 @@ module.exports = {
 		const sheetData = await googleSheets.spreadsheets.values.batchGet({
 			auth,
 			spreadsheetId,
-			ranges: ["BotData!A2:C2", "Master!L2:L"]
+			ranges: ["BotData!A2:C2", "Master!I2:I", "Master!L2:L"]
 		});
 
 		// from BotData!A2:C2
 		const n = sheetData.data.valueRanges[0].values[0][0];
 		const x = sheetData.data.valueRanges[0].values[0][1];
 
+		// from Master!I2:I
+		const allLegalPicks = sheetData.data.valueRanges[1].values.flat();
+
 		// from Master!K2:K
-		const sprites = sheetData.data.valueRanges[1].values.flat();
+		const sprites = sheetData.data.valueRanges[2].values.flat();
 
 		const outputChannel = await interaction.guild.channels.fetch(
 			cache.outputChannel
@@ -130,13 +133,15 @@ module.exports = {
 				});
 
 				stagedPicks.forEach(async pick => {
-					const users = await interaction.guild.members
-						.fetch({ query: pick[1], limit: 1 })
-						.catch(console.error);
-					const user = users.map(u => u.user)[0];
-					await outputChannel.send(
-						`${user} has locked in ${pick[0]}!`
+					const spriteIdx = allLegalPicks.findIndex(
+						pokemon =>
+							pokemon.toUpperCase() === pick[0].toUpperCase()
 					);
+					const stagedEmbed = new EmbedBuilder()
+						.setColor(0xd81717)
+						.setTitle(`${pick[1]} has locked in ${pick[0]}!`)
+						.setThumbnail(sprites[spriteIdx]);
+					await outputChannel.send({ embeds: [stagedEmbed] });
 				});
 				const queriedMember = await interaction.guild.members
 					.fetch({ query: nextPlayerName, limit: 1 })

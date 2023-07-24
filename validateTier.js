@@ -11,8 +11,8 @@ module.exports = {
 		} else {
 			let valid = false;
 			console.log(pokemon);
-			for (let i = 0; i < Number(pokemon[1]) - 1; i++) {
-				if (tiers[i] <= cache.tiers[i]) valid = true;
+			for (let i = 0; i <= Number(pokemon[1]) - 1; i++) {
+				if (tiers[i] < cache.tiers[i]) valid = true;
 			}
 			return valid;
 		}

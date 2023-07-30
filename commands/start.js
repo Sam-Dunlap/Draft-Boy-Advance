@@ -51,6 +51,9 @@ module.exports = {
 			interaction.options.getString("tierslots") || "99/99/99/99"; // if no tier slots specified, just set it to an arbitrarily large number so picks will go through regardless of tier
 		const flex = interaction.options.getBoolean("flex");
 		const tiers = tierslots.split("/");
+		tiers.forEach(tier => {
+			tier = Number(tier);
+		});
 
 		if (getCacheWithGuildId(interaction.guild.id)) {
 			await interaction.reply(
@@ -112,13 +115,15 @@ module.exports = {
 		});
 		console.log(
 			`
-        //////////////////////////////////////////
-        Draft Started
-        player count: ${playerCount}
-        output channel: ${outputChannel.name}
-        team size: ${teamSize}
-        //////////////////////////////////////////
-        `
+		//////////////////////////////////////////
+		Draft Started
+		player count: ${playerCount}
+		output channel: ${outputChannel.name}
+		team size: ${teamSize}
+		tiers: ${tiers}
+		flex: ${flex || "false"}
+		//////////////////////////////////////////
+		`
 		);
 	}
 };

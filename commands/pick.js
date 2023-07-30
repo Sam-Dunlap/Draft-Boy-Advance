@@ -147,7 +147,6 @@ module.exports = {
 					.fetch({ query: nextPlayerName, limit: 1 })
 					.catch(console.error);
 				const memberId = queriedMember.map(u => u.user.id)[0];
-				console.log(`values: ${values}`);
 				googleSheets.spreadsheets.values.append({
 					auth,
 					spreadsheetId,
@@ -177,7 +176,7 @@ module.exports = {
 						`
           //////////////////////////////////////////
           Draft Finished
-          ${n - 1} picks, I think.
+          ${n} picks, I think.
           GLHF
           //////////////////////////////////////////
                   `

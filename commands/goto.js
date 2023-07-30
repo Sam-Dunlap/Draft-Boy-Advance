@@ -17,6 +17,7 @@ module.exports = {
 					option
 						.setName("picknumber")
 						.setDescription("The pick number to rewind to")
+						.setRequired(true)
 				)
 		)
 		.addSubcommand(subcommand =>

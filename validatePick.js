@@ -2,12 +2,20 @@ const { google } = require("googleapis");
 const { spreadsheetId } = require("./config.json");
 const { validateTier } = require("./validateTier");
 const { spellCheck } = require("./spellCheck");
+const { getUser } = require("./PendingPicks");
+
+const wait = ms => new Promise((resolve, reject) => setTimeout(resolve, ms));
 
 module.exports = {
-	// always returns {valid: boolean, message: {content: string}}.
+	// always returns {valid: boolean, message: {content: string}, pickedMons: [pokemon1, pokemon2 ...]}.
 	// whether caller == drafter & sending the lock-in message to output channel
 	// is handled in pick.js
 	async validatePick(user, pick, cache) {
+		// weird bug where occasionally the google api seems to be fetching the spreadsheet before the XLOOKUP to set the tier in column C finishes, so coachAndTierArray breaks.
+		// I think just waiting between validations will help
+
+		await wait(1000);
+
 		const auth = new google.auth.GoogleAuth({
 			keyFile: "./credentials.json",
 			scopes: "https://www.googleapis.com/auth/spreadsheets"
@@ -28,14 +36,12 @@ module.exports = {
 		// an error. Otherwise we need to flatten because pickedData is formatted like
 		// [ [pokemon1] , [pokemon2] , [etc] ]
 		const pickedMons = pickedData ? pickedData.flat() : [];
-		console.log(pickedMons);
 		var foundDuplicatePick = false;
 		pickedMons.forEach(mon => {
 			if (mon.toUpperCase() === pick) {
 				foundDuplicatePick = true;
 			}
 		});
-
 		if (foundDuplicatePick) {
 			return {
 				valid: false,
@@ -50,7 +56,6 @@ module.exports = {
 		// = undefined if there are no picks yet, so fallback to an empty array
 		// this is used to verify that the pick is from a legal tier
 		const coachAndTierArray = sheetData.data.valueRanges[1].values || [];
-		console.log(coachAndTierArray);
 		// from Master!H2:I. formatted as [ [pokemon, tier] , [pokemon2, tier] ]
 		const picksWithTiers = sheetData.data.valueRanges[2].values;
 
@@ -64,6 +69,18 @@ module.exports = {
 			if (coachAndTierArray[i][0] === user) {
 				tiers[Number(coachAndTierArray[i][1]) - 1] += 1;
 			}
+		}
+
+		// checks through queued picks as well
+		const userQueue = getUser(user);
+		if (userQueue && userQueue.picks.length > 0) {
+			userQueue.picks.forEach(pick => {
+				const tieredMon = picksWithTiers.find(
+					mon => mon[0].toUpperCase() === pick
+				);
+				const tier = Number(tieredMon[1]);
+				tiers[tier - 1] += 1;
+			});
 		}
 
 		// 0th index from each array in Master!H2:I gets every legal pokemon name

@@ -10,7 +10,6 @@ module.exports = {
 
 	getUser: username => {
 		const user = pendingPicks.find(user => user.name === username);
-		if (!user) return;
 		return user;
 	},
 

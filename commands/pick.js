@@ -45,14 +45,14 @@ module.exports = {
 		const sheetData = await googleSheets.spreadsheets.values.batchGet({
 			auth,
 			spreadsheetId,
-			ranges: ["BotData!A2:C2", "Master!I2:I", "Master!L2:L"]
+			ranges: ["BotData!A2:C2", "Master!H2:H", "Master!K2:K"]
 		});
 
 		// from BotData!A2:C2
 		const n = sheetData.data.valueRanges[0].values[0][0];
 		const x = sheetData.data.valueRanges[0].values[0][1];
 
-		// from Master!I2:I
+		// from Master!H2:H, names of legal pokemon
 		const allLegalPicks = sheetData.data.valueRanges[1].values.flat();
 
 		// from Master!K2:K

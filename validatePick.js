@@ -26,7 +26,7 @@ module.exports = {
 		const sheetData = await googleSheets.spreadsheets.values.batchGet({
 			auth,
 			spreadsheetId,
-			ranges: ["Master!A2:A", "Master!B2:C", "Master!I2:J"]
+			ranges: ["Master!A2:A", "Master!B2:C", "Master!H2:I"]
 		});
 
 		// from Master!A2:A, the array of all pokemon picked so far

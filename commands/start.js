@@ -114,7 +114,7 @@ module.exports = {
 			}
 		});
 		console.log(
-			`
+			`${new Date().toLocaleTimeString()} - 
 		//////////////////////////////////////////
 		Draft Started
 		player count: ${playerCount}

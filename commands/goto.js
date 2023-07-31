@@ -72,7 +72,9 @@ module.exports = {
 					values: [[`${Number(n) + 1}`]]
 				}
 			});
-			return console.log("player skipped");
+			return console.log(
+				`${new Date().toLocaleTimeString()} - player skipped`
+			);
 		}
 
 		const rawNandCoach = await googleSheets.spreadsheets.values.batchGet({

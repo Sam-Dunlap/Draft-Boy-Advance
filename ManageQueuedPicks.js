@@ -28,7 +28,9 @@ const stagePicks = props => {
 			if (user.picks.length === 0) {
 				nextPlayerName = username;
 				foundAllQueuedPicks = true;
-				console.log("[QUEUE]: they sniped this poor mans whole career");
+				console.log(
+					`${new Date().toLocaleTimeString()} - [QUEUE]: they sniped this poor mans whole career`
+				);
 				break;
 			}
 		}
@@ -37,7 +39,11 @@ const stagePicks = props => {
 		pickedMons.push(user.picks[0]);
 		stagedPicks.push([user.picks[0], user.name]);
 		user.deletePickByIndex(0);
-		console.log(`[QUEUE]: Queued pick by ${user.name} staged`);
+		console.log(
+			`${new Date().toLocaleTimeString()} - [QUEUE]: Queued pick by ${
+				user.name
+			} staged`
+		);
 		n1++;
 	}
 	return { n1, nextPlayerName, stagedPicks };

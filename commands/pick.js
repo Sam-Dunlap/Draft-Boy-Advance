@@ -122,7 +122,7 @@ module.exports = {
 						i++
 					) {
 						console.log(
-							"[REMOVED FROM STAGEDPICKS]: ",
+							`${new Date().toLocaleTimeString()} - [REMOVED FROM STAGEDPICKS]: `,
 							stagedPicks.pop()
 						);
 					}
@@ -173,7 +173,7 @@ module.exports = {
 						"The draft is complete. May the best mons win!"
 					);
 					console.log(
-						`
+						`${new Date().toLocaleTimeString()} - 
           //////////////////////////////////////////
           Draft Finished
           ${n} picks, I think.

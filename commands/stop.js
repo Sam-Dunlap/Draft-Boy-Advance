@@ -25,7 +25,7 @@ module.exports = {
 		const cache = deleteCache(getCacheWithGuildId(interaction.guild.id))[0];
 
 		console.log(
-			`
+			`${new Date().toLocaleTimeString()} - 
         //////////////////////////////////////////
         Draft Stopped
         player count: ${cache ? cache.playerCount : "No cache data to display"}

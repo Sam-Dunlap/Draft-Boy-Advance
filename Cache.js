@@ -8,11 +8,19 @@ module.exports = {
 	},
 	saveCache: cache => {
 		cacheContainer.push(cache);
-		console.log(`[CACHE]: ${cache.guildId} saved`);
+		console.log(
+			`${new Date().toLocaleTimeString()} - [CACHE]: ${
+				cache.guildId
+			} saved`
+		);
 	},
 	deleteCache: cache => {
 		const idx = cacheContainer.find(c => c === cache);
-		console.log(`[CACHE]: ${cache.guildId} deleted`);
+		console.log(
+			`${new Date().toLocaleTimeString()} - [CACHE]: ${
+				cache.guildId
+			} deleted`
+		);
 		return cacheContainer.splice(idx, 1);
 	},
 

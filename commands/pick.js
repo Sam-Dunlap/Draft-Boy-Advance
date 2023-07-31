@@ -29,10 +29,10 @@ module.exports = {
 		const cache = getCacheWithGuildId(interaction.guild.id);
 
 		if (!cache) {
-			await interaction.reply(
-				`I don't detect any live drafts in this server. Please have an admin run /start.`
-			);
-			return;
+			return await interaction.reply({
+				content: `You do not appear to be in an active draft.`,
+				ephemeral: true
+			});
 		}
 
 		const auth = new google.auth.GoogleAuth({
@@ -89,6 +89,16 @@ module.exports = {
 
 		if (valid) {
 			if (commandCaller === currentDrafter || admin) {
+				const teamRef = await googleSheets.spreadsheets.values.get({
+					auth,
+					spreadsheetId,
+					range: "Teams Reference!A2:E",
+					valueRenderOption: "FORMULA"
+				});
+				const teamName = teamRef.data.values.find(
+					teamArray => teamArray[0] === currentDrafter
+				)[1];
+
 				const values = [[pokemonPick, currentDrafter]];
 
 				await interaction.editReply(
@@ -103,7 +113,9 @@ module.exports = {
 								: pokemonPick
 						}!`
 					)
-					.setThumbnail(sprites[message]);
+					.setThumbnail(sprites[message])
+					.setFooter({ text: teamName })
+					.setTimestamp();
 
 				await outputChannel.send({ embeds: [lockMessageEmbed] });
 				pickedMons.push(pokemonPick);
@@ -137,10 +149,15 @@ module.exports = {
 						pokemon =>
 							pokemon.toUpperCase() === pick[0].toUpperCase()
 					);
+					let teamName = teamRef.data.values.find(
+						teamArray => teamArray[0] === pick[1]
+					)[1];
 					const stagedEmbed = new EmbedBuilder()
 						.setColor(0xd81717)
 						.setTitle(`${pick[1]} has locked in ${pick[0]}!`)
-						.setThumbnail(sprites[spriteIdx]);
+						.setThumbnail(sprites[spriteIdx])
+						.setFooter({ text: teamName })
+						.setTimestamp();
 					await outputChannel.send({ embeds: [stagedEmbed] });
 				});
 				const queriedMember = await interaction.guild.members

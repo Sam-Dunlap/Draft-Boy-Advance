@@ -17,8 +17,6 @@ module.exports = {
 			for (let i = 0; i <= pkmnTierIdx; i++) {
 				maxOfTier += Number(cache.tiers[i]);
 				alreadyLocked += tiers[i];
-				console.log("max: ", maxOfTier);
-				console.log("already locked: ", alreadyLocked);
 			}
 			let availableFlex = maxOfTier - alreadyLocked > 0;
 			if (!availableFlex) return false;
@@ -43,9 +41,6 @@ module.exports = {
 				let temperTiers = tempTiers.slice(i);
 				let totalUsedSlots = temperTiers.reduce((acc, curr) => acc + curr);
 				if (totalUsedSlots > totalFlexSlots[i]) {
-					console.log("used slots: ",totalUsedSlots);
-					console.log("flex slots: ", totalFlexSlots)
-					console.log("i = ", i)
 					notOverstockedBelow = false;
 				};
 			}

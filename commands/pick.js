@@ -67,7 +67,7 @@ module.exports = {
 		const admin = interaction.options.getBoolean("admin");
 		const y = getDraftSeat(n, x);
 
-		if (admin && interaction.user.id !== "111742358072082432") {
+		if (admin && interaction.user.id !== "124319635481821184") {
 			return interaction.reply(
 				`Hey, ${interaction.user} is trying to make an admin pick and they're not an admin! Shame them!`
 			);
@@ -93,7 +93,7 @@ module.exports = {
 					auth,
 					spreadsheetId,
 					range: "Teams Reference!A2:E",
-					valueRenderOption: "FORMULA"
+					valueRenderOption: "UNFORMMATED_VALUE"
 				});
 				const teamName = teamRef.data.values.find(
 					teamArray => teamArray[0] === currentDrafter

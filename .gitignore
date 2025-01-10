@@ -4,3 +4,4 @@ credentials.json
 commands/getsprites.js
 config_test.json
 config_prod.json
+test.js

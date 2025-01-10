@@ -10,7 +10,7 @@ To do so, you will need a google cloud service account, which you can set up at 
 
 The bot uses google sheets to track and output the draft data. You will need to copy [this](https://docs.google.com/spreadsheets/d/1m4CsvwY6wZDcFwh5lv-7nuUHzyz94MkraYDjA2Vk-Vk/edit?usp=sharing) template to your own Google Drive (file => Make a copy). Then get your google service account email. It is visible on the google cloud console, and in the client_email section of your credentials.json file. Share your spreadsheet with that email, unchecking the 'alert people' box and allowing edit privilege when you do so.
 
-Currently this template is set up for Gen IX VGC Series 2. To change the allowed Pokemon, change column H in Master to include only the legal Pokemon in your format of choice.
+Currently this template is set up for Gen IX VGC Regulation F. To change the allowed Pokemon, change column H in Master to include only the legal Pokemon in your format of choice.
 
 IMPORTANT: Once you have set everything up, the three pages Master, BotData, and PickOrder should be LOCKED and HIDDEN to all users except the Google service account, and Teams List should be LOCKED to all users. Manual changes to these spreadsheets will likely cause unexpected behavior.
 
@@ -65,7 +65,7 @@ Admin-only command. Empties the spreadsheet of bot output and stops the draft. U
 
 ### /pick (pokemon)
 
-If it is your turn to pick, attempts to lock in the pokemon, otherwise it attempts to add the pokemon to the user's queued picks. Duplicate pokemon and user entry not matching a format-legal pokemon are disallowed. Picks are case-insensitive, but must be spelled correctly (Quakxly will return an error). It is recommended that admins keep a reference of legal Pokemon on hand to quickly correct misspellings.
+If it is your turn to pick, attempts to lock in the pokemon, otherwise it attempts to add the pokemon to the user's queued picks. Duplicate pokemon and user entry not matching a format-legal pokemon are disallowed. Picks are case-insensitive, but must be spelled correctly (Quakxly will return an error). Draft Boy will attempt a spell-check and return its best guess as a reply to your message, but will not automatically lock in its guess.
 
 Queued picks are automatically staged and locked in if they are still available when the draft passes to the user who queued them. If a user's first queued pick is sniped, the second queued pick is tried, and so on until either a legal pick is found or all queued picks have been tried, in which case the user is prompted for a new pick.
 
@@ -91,4 +91,12 @@ I will continue adding functionality to this bot over time, so if you see someth
 
 It's therefore a good idea to occasionally check back here for updates if you're using a clone.
 
-Thanks to ScoutFlower for formatting the spreadsheet and for coming up with the idea for DBA.
+Thanks to [ScoutFlower](https://www.youtube.com/@sscoutflower) for formatting the spreadsheet.
+
+## Example Output
+
+### Lock-in announcement (sent to `outputchannel`)
+![image](https://github.com/Sam-Dunlap/Draft-Boy-Advance/assets/16829393/31e03e77-67ff-43f2-9665-d895bb41c400)
+
+### Pick Command
+![image](https://github.com/Sam-Dunlap/Draft-Boy-Advance/assets/16829393/7b726616-2913-43e4-908c-498a718cdce7)

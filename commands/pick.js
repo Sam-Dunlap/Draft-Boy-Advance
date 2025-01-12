@@ -93,7 +93,7 @@ module.exports = {
 					auth,
 					spreadsheetId,
 					range: "Teams Reference!A2:E",
-					valueRenderOption: "UNFORMMATED_VALUE"
+					valueRenderOption: "UNFORMATTED_VALUE"
 				});
 				const teamName = teamRef.data.values.find(
 					teamArray => teamArray[0] === currentDrafter

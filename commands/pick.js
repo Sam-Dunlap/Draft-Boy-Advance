@@ -67,7 +67,7 @@ module.exports = {
 		const admin = interaction.options.getBoolean("admin");
 		const y = getDraftSeat(n, x);
 
-		if (admin && interaction.user.id !== "124319635481821184") {
+		if (admin && interaction.user.id !== "185233920097386496") {
 			return interaction.reply(
 				`Hey, ${interaction.user} is trying to make an admin pick and they're not an admin! Shame them!`
 			);
